@@ -10,6 +10,8 @@
 #' @param sensitivity numeric. Specify the threshold of sensitivity
 #' @param specificity numeric. Specify the threshold of specificity
 #' @param plot logical. if TRUE, the sensitivity and specificity will be plotted
+#' @return data.frame including cutoff point, and adjusted sensitivity and specificity
+#'     based on the specified threshold
 #'@examples
 #'\dontrun{
 #'# random classification and probability score
@@ -95,6 +97,9 @@ adjroc <- function(score,
   }
 
   if (plot) {
+    cutoff <- NA #Rstudio gives annoying message in the build
+    val    <- NA #Rstudio gives annoying message in the build
+    group  <- NA #Rstudio gives annoying message in the build
     print(
       ggplot2::ggplot(plt, ggplot2::aes(x=cutoff, y=val, color=group)) +
         ggplot2::geom_line(size = 1) +
@@ -116,6 +121,8 @@ adjroc <- function(score,
 
 
 
-
+score <- runif(10000, min=0, max=1)
+class <- sample(x = c(1,0), 10000, replace=T)
+adjroc(score = score, class = class, specificity = 0.9, plot = F)
 
 

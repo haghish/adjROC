@@ -14,9 +14,9 @@ adjroc(
 )
 }
 \arguments{
-\item{score}{An numeric array of diagnostic score}
+\item{score}{A numeric array of diagnostic score i.e. the estimated probability of each diagnosis}
 
-\item{class}{An array of equal length of \code{"score"}, containing the class of the observations}
+\item{class}{A numeric array of equal length of \code{"score"}, including the actual class of the observations}
 
 \item{method}{Specifies the method for estimating the ROC curve. Three methods are supported, which are \code{"empirical"}, \code{"binormal"}, and \code{"nonparametric"}}
 
@@ -26,20 +26,27 @@ adjroc(
 
 \item{plot}{logical. if TRUE, the sensitivity and specificity will be plotted}
 }
+\value{
+data.frame including cutoff point, and adjusted sensitivity and specificity
+    based on the specified threshold
+}
 \description{
-computes adjusted sensitivity, adjusted specificity, or the meeting
-    point between sensitivity and specificity
+computes adjusted sensitivity, adjusted specificity, or the crossing
+    point between sensitivity and specificity for different thresholds
 }
 \examples{
 \dontrun{
-# from ROCit R package
-library(ROCit)
-data("Diabetes")
+# random classification and probability score
+score <- runif(10000, min=0, max=1)
+class <- sample(x = c(1,0), 10000, replace=T)
 
 # calculate adjusted sensitivity, when specificity threshold is 0.90:
-sen <- adjroc(score = Diabetes$chol, class = Diabetes$dtest)
-roc_binormal <- rocit(score = Diabetes$chol, class = Diabetes$dtest,
- negref = "-", method = "bin")
-geocode(dat)
+adjroc(score = score, class = class, specificity = 0.9, plot = T)
+
+# calculate adjusted specificity, when sensitivity threshold equals 0.9
+adjroc(score = score, class = class, sensitivity = 0.9, plot = T)
+
+# calculate the meeting point between sensitivity and specificity
+adjroc(score = score, class = class, plot = T)
 }
 }
