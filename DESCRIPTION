@@ -1,7 +1,7 @@
 Package: adjROC
 Type: Package
-Title: Computes Sensitivity at a Fix Value of Specificity and Vice Versa
-Version: 0.1.0
+Title: Computing Sensitivity at a Fix Value of Specificity and Vice Versa
+Version: 0.1.1
 Author: E. F. Haghish
 Maintainer: E. F. Haghish <haghish@uio.no>
 Description: For a binary classification the adjusted sensitivity and specificity are measured for a given fixed threshold. If the threshold for either sensitivity or specificity is not given, the crossing point between the sensitivity and specificity curves are returned.
