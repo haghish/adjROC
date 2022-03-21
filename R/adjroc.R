@@ -13,20 +13,18 @@
 #' @return data.frame including cutoff point, and adjusted sensitivity and specificity
 #'     based on the specified threshold
 #'@examples
-#'\dontrun{
 #'# random classification and probability score
 #'score <- runif(10000, min=0, max=1)
-#'class <- sample(x = c(1,0), 10000, replace=T)
+#'class <- sample(x = c(1,0), 10000, replace=TRUE)
 #'
 #'# calculate adjusted sensitivity, when specificity threshold is 0.90:
-#'adjroc(score = score, class = class, specificity = 0.9, plot = T)
+#'adjroc(score = score, class = class, specificity = 0.9, plot = TRUE)
 #'
 #'# calculate adjusted specificity, when sensitivity threshold equals 0.9
-#'adjroc(score = score, class = class, sensitivity = 0.9, plot = T)
+#'adjroc(score = score, class = class, sensitivity = 0.9, plot = TRUE)
 #'
 #'# calculate the meeting point between sensitivity and specificity
-#'adjroc(score = score, class = class, plot = T)
-#'}
+#'adjroc(score = score, class = class, plot = TRUE)
 #' @export
 
 adjroc <- function(score,
