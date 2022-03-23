@@ -1,6 +1,6 @@
 Package: adjROC
 Type: Package
-Title: Computing Sensitivity at a Fix Specificity Value and Vice Versa
+Title: Computing Sensitivity at a Fix Value of Specificity and Vice Versa
 Version: 0.2.0
 Author: E. F. Haghish
 Maintainer: E. F. Haghish <haghish@uio.no>
