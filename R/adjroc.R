@@ -40,6 +40,8 @@ adjroc <- function(score,
     # requireNamespace("ggplot2")
   })
 
+  DF <- NULL
+
   # Calculate the ROC curve
   # ============================================================
   roc <- ROCit::rocit(score = score, class = class, method = method)
@@ -52,7 +54,7 @@ adjroc <- function(score,
   df$FPR <- 1 - df$FPR
   colnames(df) <- c("cutoff", "sensitivity", "specificity")
 
-  # Plot the curves
+  # Prepare the plot
   # ============================================================
   if (plot) {
     #plot(df$sensitivity~df$cutoff, type = "l", col = "hotpink", lwd = 2,
@@ -81,19 +83,21 @@ adjroc <- function(score,
   # ============================================================
   if (is.null(sensitivity) & is.null(specificity)) {
     # calculate the mean at the closest distance
-    df <- df[which.min(abs(df$specificity - df$sensitivity)), ]
-    df$meeting_point <- mean(c(df$sensitivity, df$specificity))
+    DF <- df[which.min(abs(df$specificity - df$sensitivity)), ]
+    DF$meeting_point <- mean(c(DF$sensitivity, DF$specificity))
   }
   else if (is.null(sensitivity) & !is.null(specificity)) {
-    df <- df[which.min(abs(df$specificity - specificity)), ]
+    DF <- df[which.min(abs(df$specificity - specificity)), ]
   }
   else if (!is.null(sensitivity) & is.null(specificity)) {
-    df <- df[which.min(abs(df$sensitivity - sensitivity)), ]
+    DF <- df[which.min(abs(df$sensitivity - sensitivity)), ]
   }
   else {
     stop("sensitivity and specificity cannot be specified together")
   }
 
+  # Plot the sensitivity and specificity curves
+  # ============================================================
   if (plot) {
     cutoff <- NA #Rstudio gives annoying message in the build
     val    <- NA #Rstudio gives annoying message in the build
@@ -103,7 +107,7 @@ adjroc <- function(score,
         ggplot2::geom_line(size = 1) +
         ggplot2::ylab("Sensitivity and specificity\n") +
         ggplot2::xlab("\nCutoff") +
-        ggplot2::geom_vline(xintercept = df$cutoff, linetype="dashed", color = "gray", size=1) +
+        ggplot2::geom_vline(xintercept = DF$cutoff, linetype="dashed", color = "gray", size=1) +
         ggplot2::theme(
           legend.title = ggplot2::element_blank(),
           panel.background = ggplot2::element_blank(),
@@ -114,13 +118,28 @@ adjroc <- function(score,
     )
   }
 
-  return(df)
+  # Calculate accuracy based on the specified cutoff
+  # ============================================================
+  TP <- sum(score >= DF$cutoff & class == 1)
+  FP <- sum(score >= DF$cutoff & class != 1)
+  TN <- sum(score < DF$cutoff & class != 1)
+  FN <- sum(score < DF$cutoff & class == 1)
+
+  DF$accuracy <- (TN+TP)/(TN+TP+FP+FN)
+  DF$TP <- TP
+  DF$TN <- TN
+  DF$FP <- FP
+  DF$FN <- FN
+
+  cat("\nNote: class 1 means positive cases\n")
+
+  return(DF)
 }
 
 
 
-score <- runif(10000, min=0, max=1)
-class <- sample(x = c(1,0), 10000, replace=T)
-adjroc(score = score, class = class, specificity = 0.9, plot = F)
+#score <- runif(10000, min=0, max=1)
+#class <- sample(x = c(1,0), 10000, replace=T)
+#adjroc(score = score, class = class, specificity = 0.2, plot = F)
 
 
