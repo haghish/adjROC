@@ -3,7 +3,7 @@
 - - -
     
 
-`adjROC`: Computing Sensitivity at a Fix Value of Specificity and Vice Versa
+[`adjROC`: Computing Sensitivity at a Fix Value of Specificity and Vice Versa](https://CRAN.R-project.org/package=adjROC)
 ============================================================================================================
 
 `adjROC` is an R package for computing adjusted sensitivity and specificity at particular thresholds. There are 
