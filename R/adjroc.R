@@ -131,7 +131,7 @@ adjroc <- function(score,
   DF$FP <- FP
   DF$FN <- FN
 
-  cat("\nNote: class 1 means positive cases\n")
+  # cat("\nNote: class 1 means positive cases\n")
 
   return(DF)
 }
