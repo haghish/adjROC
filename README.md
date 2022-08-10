@@ -1,5 +1,7 @@
 > Haghish, E. F. (2022). adjROC: Computing Sensitivity at a Fix Value of Specificity and Vice Versa [Computer software]. https://CRAN.R-project.org/package=adjROC.
 
+[![](https://cranlogs.r-pkg.org/badges/adjROC)](https://cran.r-project.org/package=adjROC) [![](https://cranlogs.r-pkg.org/badges/grand-total/adjROC?color=orange)](https://cran.r-project.org/package=adjROC)
+
 - - -
     
 
