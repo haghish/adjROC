@@ -1,4 +1,5 @@
 
+
 test.auprc <- function(data, i) {
   require(yardstick)
   a <- yardstick::pr_auc_vec(data$class1[i],
