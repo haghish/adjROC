@@ -81,7 +81,7 @@ boot.adjroc <- function(score,
   mean <- mean(results$t)
   ci   <- boot::boot.ci(results, type = "norm")
   names(ci$normal) <- c("ci", "low", "high")
-  cat("\nmean (CI) =", mean, "(", ci$normal[1,2:3], ")\n\n")
+  cat("Mean (95% CI) =", mean, "(", ci$normal[1,2:3], ")\n\n")
 
   return(list(mean = mean,
               ci = ci$normal,
