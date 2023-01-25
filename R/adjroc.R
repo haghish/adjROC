@@ -10,6 +10,8 @@
 #' @param sensitivity numeric. Specify the threshold of sensitivity
 #' @param specificity numeric. Specify the threshold of specificity
 #' @param plot logical. if TRUE, the sensitivity and specificity will be plotted
+#' @param scale logical. if TRUE, the estimated probabilties (cutoff) will be
+#'              scaled to range from 0 to 1.
 #' @return data.frame including cutoff point, and adjusted sensitivity and specificity
 #'     based on the specified threshold
 #'@examples
@@ -26,14 +28,14 @@
 #'# calculate the meeting point between sensitivity and specificity
 #'adjroc(score = score, class = class, plot = TRUE)
 #' @export
-
 adjroc <- function(score,
                    class,
                    method = "emp",
                    sensitivity = NULL,
                    specificity = NULL,
-                   plot = FALSE
-                   ) {
+                   plot = FALSE,
+                   scale = FALSE
+) {
 
   suppressPackageStartupMessages({
     requireNamespace("ROCit")
@@ -53,6 +55,15 @@ adjroc <- function(score,
   # ============================================================
   df$FPR <- 1 - df$FPR
   colnames(df) <- c("cutoff", "sensitivity", "specificity")
+
+  # Scale the Cutoff range
+  # ============================================================
+  if (scale) {
+    monotonicScale <- function(x){(x-min(x, na.rm = T))/(max(x, na.rm = T)-min(x, na.rm = T))}
+    df$cutoff[!is.infinite(df$cutoff)] <- monotonicScale(df$cutoff[!is.infinite(df$cutoff)])
+    print(head(df$cutoff[!is.infinite(df$cutoff)]))
+    print(summary(df$Cutof))
+  }
 
   # Prepare the plot
   # ============================================================
@@ -103,7 +114,7 @@ adjroc <- function(score,
     val    <- NA #Rstudio gives annoying message in the build
     group  <- NA #Rstudio gives annoying message in the build
     print(
-      ggplot2::ggplot(plt, ggplot2::aes(x=cutoff, y=val, color=group)) +
+      figure <- ggplot2::ggplot(plt, ggplot2::aes(x=cutoff, y=val, color=group)) +
         ggplot2::geom_line(size = 1) +
         ggplot2::ylab("Sensitivity and specificity\n") +
         ggplot2::xlab("\nCutoff") +
@@ -133,10 +144,9 @@ adjroc <- function(score,
 
   # cat("\nNote: class 1 means positive cases\n")
 
-  return(DF)
+  if (!plot) return(DF)
+  else return(list(df = DF, ggplot = figure))
 }
-
-
 
 #score <- runif(10000, min=0, max=1)
 #class <- sample(x = c(1,0), 10000, replace=T)
