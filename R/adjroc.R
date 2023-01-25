@@ -60,9 +60,8 @@ adjroc <- function(score,
   # ============================================================
   if (scale) {
     monotonicScale <- function(x){(x-min(x, na.rm = T))/(max(x, na.rm = T)-min(x, na.rm = T))}
-    df$cutoff[!is.infinite(df$cutoff)] <- monotonicScale(df$cutoff[!is.infinite(df$cutoff)])
-    print(head(df$cutoff[!is.infinite(df$cutoff)]))
-    print(summary(df$Cutof))
+    df <- df[!is.infinite(df$cutoff), ]
+    df$cutoff <- monotonicScale(df$cutoff)
   }
 
   # Prepare the plot
