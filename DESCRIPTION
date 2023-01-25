@@ -8,12 +8,12 @@ Maintainer: E. F. Haghish <haghish@uio.no>
 Description: For a binary classification the adjusted sensitivity and specificity 
              are measured for a given fixed threshold. If the threshold for either 
              sensitivity or specificity is not given, the crossing point between 
-             the sensitivity and specificity curves are returned. For boostrap 
+             the sensitivity and specificity curves are returned. For bootstrap 
              procedures, mean and CI bootstrap values of sensitivity, specificity, 
              crossing point between specificity and specificity as well as AUC 
              and AUCPR can be evaluated.
 License: MIT + file LICENSE
-Imports: ROCit, ggplot2, boot, yardstick
+Imports: ROCit, ggplot2, boot, yardstick, boot.pval
 Encoding: UTF-8
 RoxygenNote: 7.2.3
 URL: https://github.com/haghish/adjROC, https://www.sv.uio.no/psi/english/people/aca/haghish/
