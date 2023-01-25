@@ -1,17 +1,17 @@
-
 #' @title boot.adjroc
 #' @description computes bootstrap adjusted sensitivity, bootstrap adjusted
 #'     specificity, or bootstrap crossing point between sensitivity and
 #'     specificity for different thresholds
-#' @importFrom  adjROC adjroc
-#' @param data data.frame, that includes at least 2 columns named \code{"score"}
-#'     and \code{"class"}, which are passed to \code{"adjroc"} function. see
-#'     the \code{"adjroc"} function documentation for more information
+#' @importFrom adjROC adjroc
+#' @importFrom boot boot boot.ci
+#' @param score A numeric array of diagnostic score i.e. the estimated probability of each diagnosis
+#' @param class A numeric array of equal length of \code{"score"}, including the actual class of the observations
+#' @param n number of bootstrap samples.
 #' @param method Specifies the method for estimating the ROC curve. Three methods are supported, which are \code{"empirical"}, \code{"binormal"}, and \code{"nonparametric"}
-#' @param sensitivity numeric. Specify the threshold of sensitivity
-#' @param specificity numeric. Specify the threshold of specificity
-#' @return data.frame including bootstrap value of sensitivity, specificity, or
-#'     the crossing point
+#' @param sensitivity numeric. Specify the threshold of sensitivity.
+#' @param specificity numeric. Specify the threshold of specificity.
+#' @return list including mean and CI of bootstrap value (sensitivity, specificity, or
+#'     the crossing point) and the bootstrap data.
 #'@examples
 #'# random classification and probability score
 #'score <- runif(10000, min=0, max=1)
@@ -21,10 +21,10 @@
 #'adjroc(score = score, class = class, specificity = 0.9, plot = TRUE)
 #'
 #'# calculate adjusted specificity, when sensitivity threshold equals 0.9
-#'adjroc(score = score, class = class, sensitivity = 0.9, plot = TRUE)
+#'boot.adjroc(score = score, class = class, n = 100, sensitivity = 0.9)
 #'
-#'# calculate the meeting point between sensitivity and specificity
-#'adjroc(score = score, class = class, plot = TRUE)
+#'# calculate the bootstrap meeting point between sensitivity and specificity
+#'boot.adjroc(score = score, class = class, n = 100)
 #' @export
 
 boot.adjroc <- function(score,
@@ -61,8 +61,6 @@ boot.adjroc <- function(score,
 
     return(as.numeric(perf[test]))
   }
-
-
 
   # create the dataframe
   # ============================================================
