@@ -27,18 +27,69 @@
 #'adjroc(score = score, class = class, plot = TRUE)
 #' @export
 
-boot.adjroc <- function(data, b,
+boot.adjroc <- function(score,
+                        class,
+                        n = 100,
                         method = "emp",
                         sensitivity = NULL,
                         specificity = NULL) {
-  if (!is.null(specificity)) test <- "sensitivity"
-  else if (!is.null(sensitivity)) test <- "specificity"
-  else test <- "meeting_point"
 
-  DF <- adjROC::adjroc(score = data$score[b],
-                       class = data$class[b],
-                       method = "emp",
-                       sensitivity = sensitivity,
-                       specificity = specificity)
-  return(DF[, test])
+  # define the statistics function
+  # ============================================================
+  statistic <- function(df = df,
+                        method = "emp",
+                        sensitivity = sensitivity,
+                        specificity = specificity,
+                        indices,
+                        ...) {
+
+    # subset the bootstrapped data
+    df <- df[indices, ]
+
+    # run adjroc
+    perf <- adjroc(score = df$score,
+                   class = df$class,
+                   method = "emp",
+                   sensitivity = sensitivity,
+                   specificity = specificity)
+
+    # Specify the metric of interest
+    # ----------------------------------------------------------
+    if (!is.null(specificity)) test <- "sensitivity"
+    else if (!is.null(sensitivity)) test <- "specificity"
+    else test <- "meeting_point"
+
+    return(as.numeric(perf[test]))
+  }
+
+
+
+  # create the dataframe
+  # ============================================================
+  df <- as.data.frame(cbind(score = score,
+                            class = class))
+
+  # run bootstrap adjroc
+  # ============================================================
+  results <- boot::boot(data = df,
+                        statistic = statistic,
+                        R = n,
+                        method = method,
+                        sensitivity = sensitivity,
+                        specificity = specificity)
+
+  # mean and CI of adjroc
+  # ============================================================
+  mean <- mean(results$t)
+  ci   <- boot::boot.ci(results, type = "norm")
+  names(ci$normal) <- c("ci", "low", "high")
+  cat("\nmean (CI) =", mean, "(", ci$normal[1,2:3], ")\n\n")
+
+  return(list(mean = mean,
+              ci = ci$normal,
+              sd = sd(results$boot$t),
+              boot = results))
 }
+
+
+
