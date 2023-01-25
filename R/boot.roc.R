@@ -1,5 +1,6 @@
 #' @title boot.roc
 #' @description computes bootstrap AUC and AUCPR for the ROC curve
+#' @importFrom stats sd
 #' @importFrom ROCit rocit
 #' @importFrom yardstick pr_auc_vec
 #' @importFrom boot boot boot.ci

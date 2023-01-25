@@ -2,7 +2,7 @@
 #' @description computes bootstrap adjusted sensitivity, bootstrap adjusted
 #'     specificity, or bootstrap crossing point between sensitivity and
 #'     specificity for different thresholds
-#' @importFrom adjROC adjroc
+#' @importFrom stats sd
 #' @importFrom boot boot boot.ci
 #' @param score A numeric array of diagnostic score i.e. the estimated probability of each diagnosis
 #' @param class A numeric array of equal length of \code{"score"}, including the actual class of the observations

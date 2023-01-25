@@ -7,7 +7,8 @@
 `adjROC`: ROC Curve Evaluation at a Given Threshold
 ============================================================================================================
 
-[![CRAN version](http://www.r-pkg.org/badges/version/adjROC?color=258076)](https://cran.r-project.org/package=adjROC)  [![](https://cranlogs.r-pkg.org/badges/grand-total/adjROC?color=e8a0c6)](https://cran.r-project.org/package=adjROC) [![](https://raw.githubusercontent.com/haghish/mlim/main/man/figures/manual.svg)](https://cran.r-project.org/web/packages/adjROC/adjROC.pdf)
+[![CRAN version](http://www.r-pkg.org/badges/version/adjROC?color=258076)](https://cran.r-project.org/package=adjROC)  [![](https://cranlogs.r-pkg.org/badges/grand-total/adjROC?color=e8a0c6)](https://cran.r-project.org/package=adjROC) [![](https://raw.githubusercontent.com/haghish/mlim/main/man/figures/manual.svg)](https://CRAN.R-project.org/package=adjROC)
+
 
 
 `adjROC` is an R package for computing adjusted sensitivity and specificity at particular thresholds. There are 
