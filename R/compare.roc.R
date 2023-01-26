@@ -14,6 +14,11 @@
 #'              of each diagnosis for model 2
 #' @param class2 A numeric array of equal length of \code{"score"}, including the
 #'              actual class of the observations for model 2
+#' @param metric character. specify the metric of interest which can be
+#'               \code{"AUC"} (Area Under the Curve, default),  \code{"AUCPR"}
+#'               (Area Under the Precision-Recall Curve) or \code{"meting_point"},
+#'               which evaluates the crossing-point between sensitivity and
+#'               specificity of two different models.
 #' @param n number of bootstrap samples.
 #' @param method Specifies the method for estimating the ROC curve. Three methods
 #'               are supported, which are \code{"empirical"}, \code{"binormal"},
@@ -22,9 +27,6 @@
 #'                    argument specifies which level of the "class" should be
 #'                    considered the positive event. the values can only be
 #'                    \code{"first"} or \code{"second"}.
-#' @param metric character. specify the metric of interest which can be
-#'               \code{"AUC"} (Area Under the Curve, default) or  \code{"AUCPR"}
-#'               (Area Under the Precision-Recall Curve).
 #' @return list including mean and CI of bootstrap value (sensitivity, specificity, or
 #'     the crossing point) and the bootstrap data.
 #'@examples
@@ -66,6 +68,13 @@ boot.roc <- function(score,
       b <- yardstick::pr_auc_vec(df$class2, df$score2, event_level = event_level)
       return(a - b)
     }
+  } else if (metric == "meeting_point") {
+    statistic <- function(df = df, indices, ...) {
+      df <- df[indices, ]    # subset the bootstrapped data
+      a <- adjroc(score = df$score, class = df$class, plot = FALSE)
+      b <- adjroc(score = df$score2, class = df$class2, plot = FALSE)
+      return(a$meeting_point - b$meeting_point)
+    }
   }
 
   # create the dataframe
@@ -97,3 +106,6 @@ boot.roc <- function(score,
               p = p,
               boot = results))
 }
+
+
+

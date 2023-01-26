@@ -2,7 +2,7 @@ Package: adjROC
 Type: Package
 Title: Computing Sensitivity at a Fix Value of Specificity and Vice Versa as Well as
        Bootstrap Metrics for ROC Curves 
-Version: 0.3
+Version: 0.4
 Author: E. F. Haghish
 Maintainer: E. F. Haghish <haghish@uio.no>
 Description: For a binary classification the adjusted sensitivity and specificity 
