@@ -41,7 +41,7 @@
 #'boot.roc(score = score, class = class, n = 100, metric = "AUCPR")
 #' @export
 
-boot.roc <- function(score,
+compare.roc <- function(score,
                      class,
                      score2,
                      class2,
