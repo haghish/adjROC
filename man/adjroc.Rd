@@ -10,7 +10,8 @@ adjroc(
   method = "emp",
   sensitivity = NULL,
   specificity = NULL,
-  plot = FALSE
+  plot = FALSE,
+  scale = FALSE
 )
 }
 \arguments{
@@ -25,6 +26,9 @@ adjroc(
 \item{specificity}{numeric. Specify the threshold of specificity}
 
 \item{plot}{logical. if TRUE, the sensitivity and specificity will be plotted}
+
+\item{scale}{logical. if TRUE, the estimated probabilties (cutoff) will be
+scaled to range from 0 to 1.}
 }
 \value{
 data.frame including cutoff point, and adjusted sensitivity and specificity
