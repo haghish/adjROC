@@ -26,3 +26,9 @@ users to calculate:
 - The crossing point (meeting point) between sensitivity and specificity curves
 
 and on top of these, it can also visualize the curves and the selected cutoff threshold. 
+
+# Model comparison with significance testing
+
+`adjROC` provides a procedure to compare the performance of two models based on a specific performance metric and using a bootstrap test, evaluates whether the difference in performance of the two models is due to chance or not, and provides a confidence interval accordingly. This allows researchers to not only report AUC, AUCPR, or other performance metrics, but also examine the significant differences between the models. 
+
+
