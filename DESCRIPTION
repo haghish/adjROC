@@ -4,14 +4,26 @@ Title: Computing Sensitivity at a Fix Value of Specificity and Vice Versa as Wel
        Bootstrap Metrics for ROC Curves 
 Version: 0.4
 Author: E. F. Haghish
-Maintainer: E. F. Haghish <haghish@uio.no>
-Description: For a binary classification the adjusted sensitivity and specificity 
-             are measured for a given fixed threshold. If the threshold for either 
-             sensitivity or specificity is not given, the crossing point between 
-             the sensitivity and specificity curves are returned. For bootstrap 
-             procedures, mean and CI bootstrap values of sensitivity, specificity, 
-             crossing point between specificity and specificity as well as AUC 
-             and AUCPR can be evaluated.
+Maintainer: E. F. Haghish <haghish@hotmail.com>
+Description: 
+  This software assesses the receiver operating characteristic (ROC) curve at
+  adjusted thresholds, enabling the comparison of sensitivity and specificity
+  across multiple binary classification models. Instead of comparing different
+  models with varied cutoff values in their risk thresholds, all models can be
+  compared at a fixed threshold of sensitivity, a fixed threshold of specificity, 
+  or the crossing point between sensitivity and specificity. If a threshold for
+  specificity is given (e.g., specificity = 0.9), sensitivity and its confidence
+  interval are computed, and vice versa. If the threshold for either sensitivity 
+  or specificity is not provided, the crossing point between the sensitivity and
+  specificity curves is returned, along with their confidence intervals. For
+  bootstrap procedures, the software evaluates the mean and CI bootstrap values
+  for sensitivity, specificity, and the crossing point between specificity and
+  sensitivity. This allows users to discern whether the performance of a model
+  (based on adjusted sensitivity or adjusted specificity) is significantly different
+  from other models. This software addresses the issue of comparing different
+  classification models with varying predefined cutoff thresholds, which often
+  leads to inconclusive results due to the fluctuating values of both sensitivity 
+  and specificity.
 License: MIT + file LICENSE
 Imports: ROCit, ggplot2, boot, yardstick, boot.pval
 Encoding: UTF-8
